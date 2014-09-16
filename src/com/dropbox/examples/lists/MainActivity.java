@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.dropbox.sync.android.*;
 
@@ -72,8 +73,9 @@ public class MainActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 // If the enter key is pressed...
-                if (event.getAction() == KeyEvent.ACTION_DOWN &&
-                    event.getKeyCode() == KeyEvent.KEYCODE_ENTER && listInput.getText().length() > 0) {
+                if ((actionId & EditorInfo.IME_ACTION_GO) > 0 || (actionId & EditorInfo.IME_ACTION_SEND) > 0 ||
+                        (event.getAction() == KeyEvent.ACTION_DOWN &&
+                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER && listInput.getText().length() > 0)) {
                     try {
                         // Create a new datastore and set its title.
                         DbxDatastore datastore = app.datastoreManager.createDatastore();
@@ -85,13 +87,14 @@ public class MainActivity extends Activity {
                         // Close the datastore. (It will be opened again if the user taps on that list.)
                         datastore.close();
                         listInput.setText("");
+                        listInput.requestFocus();
                     } catch (DbxException e) {
                         e.printStackTrace();
                     }
                     return true;
                 }
 
-                // We'll also get a key up event.
+                // We may also get a key up event.
                 if (event.getAction() == KeyEvent.ACTION_UP &&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     listInput.setText("");

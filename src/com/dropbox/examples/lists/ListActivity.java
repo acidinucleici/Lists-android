@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -43,8 +44,9 @@ public class ListActivity extends FragmentActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 // If the enter key is pressed...
-                if (event.getAction() == KeyEvent.ACTION_DOWN &&
-                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER && listInput.getText().length() > 0) {
+                if ((actionId & EditorInfo.IME_ACTION_GO) > 0 || (actionId & EditorInfo.IME_ACTION_SEND) > 0 ||
+                        (event.getAction() == KeyEvent.ACTION_DOWN &&
+                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER && listInput.getText().length() > 0)) {
                     DbxFields fields = new DbxFields();
                     fields.set("date", new Date());
                     fields.set("text", listInput.getText().toString());
@@ -56,10 +58,11 @@ public class ListActivity extends FragmentActivity {
                     updateList();
 
                     listInput.setText("");
+                    listInput.requestFocus();
                     return true;
                 }
 
-                // We'll actually get two events, once for key down and once for key up.
+                // We may also get a key up event.
                 if (event.getAction() == KeyEvent.ACTION_UP &&
                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     listInput.setText("");
