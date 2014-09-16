@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TableLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TableRow android:padding="12sp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Public role" />
+            <Spinner android:id="@+id/publicRoleSpinner"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:entries="@array/role_array" />
+        </TableRow>
+        <TableRow android:padding="12sp" android:id="@+id/teamRoleRow">
+            <TextView android:id="@+id/teamRoleLabel"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Team role" />
+            <Spinner android:id="@+id/teamRoleSpinner"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:entries="@array/role_array" />
+        </TableRow>
+    </TableLayout>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share via email"
+            android:id="@+id/emailButton" />
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share via text message"
+            android:id="@+id/smsButton" />
+</LinearLayout>

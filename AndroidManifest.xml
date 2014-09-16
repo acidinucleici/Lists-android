@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.dropbox.examples.lists"
+          android:versionCode="1"
+          android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="19"/>
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".ListsApplication">
+        <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
+        <activity
+                android:name="com.dropbox.client2.android.AuthActivity"
+                android:launchMode="singleTask" >
+            <intent-filter>
+                <data android:scheme="db-gmd9bz0ihf8t30o" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ListActivity" android:label="List"
+                  android:parentActivityName="com.dropbox.examples.lists.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="dslists.site44.com" />
+            </intent-filter>
+        </activity>
+        <service
+                android:name="com.dropbox.sync.android.DbxSyncService"
+                android:enabled="true"
+                android:exported="false"
+                android:label="Dropbox Sync" />
+        <activity android:name="com.dropbox.examples.lists.MainActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>
